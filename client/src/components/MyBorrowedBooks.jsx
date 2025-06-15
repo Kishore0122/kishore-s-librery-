@@ -16,7 +16,7 @@ const MyBorrowedBooks = () => {
   const fetchBorrowedBooks = async () => {
     try {
       setLoading(true);
-      const response = await axios.get("http://localhost:4000/api/v1/user/borrowed-books", {
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/v1/user/borrowed-books`, {
         withCredentials: true
       });
       console.log("Borrowed books response:", response.data);
@@ -42,7 +42,7 @@ const MyBorrowedBooks = () => {
   const handleReturnBook = async (borrowId) => {
     try {
       const response = await axios.put(
-        `http://localhost:4000/api/v1/borrow/returnborrowedbook/${borrowId}`,
+        `${process.env.REACT_APP_API_URL}/api/v1/borrow/returnborrowedbook/${borrowId}`,
         { email: user.email },
         { withCredentials: true }
       );
@@ -66,7 +66,7 @@ const MyBorrowedBooks = () => {
         
         // Also update user stats to reflect the change
         try {
-          await axios.get('http://localhost:4000/api/v1/user/stats', {
+          await axios.get(`${process.env.REACT_APP_API_URL}/api/v1/user/stats`, {
             withCredentials: true
           });
         } catch (error) {
