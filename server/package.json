@@ -26,6 +26,8 @@
 
     "jsonwebtoken": "^9.0.2",
 
+    "library-management-system": "file:..",
+
     "mongoose": "^8.14.3",
 
     "node-cron": "^4.0.5",
