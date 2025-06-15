@@ -19,7 +19,7 @@ const Catalog = () => {
   const fetchBooks = async () => {
     try {
       setLoading(true);
-      const response = await axios.get("http://localhost:4000/api/v1/books/all", {
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/v1/books/all`, {
         withCredentials: true
       });
       if (response.data.success) {
@@ -36,7 +36,7 @@ const Catalog = () => {
   const handleBorrow = async (bookId) => {
     try {
       const response = await axios.post(
-        `http://localhost:4000/api/v1/borrow-requests/request/${bookId}`,
+        `${process.env.REACT_APP_API_URL}/api/v1/borrow-requests/request/${bookId}`,
         { email: user.email },
         {
           withCredentials: true

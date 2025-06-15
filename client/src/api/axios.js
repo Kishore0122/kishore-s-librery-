@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Create axios instance with default config
 const api = axios.create({
-  baseURL: 'http://localhost:4000/api/v1',
+  baseURL: `${process.env.REACT_APP_API_URL || "http://localhost:4000"}/api/v1`,
   withCredentials: true,
   headers: {
     'Content-Type': 'application/json',
@@ -51,7 +51,7 @@ api.interceptors.request.use(
 // Export a function to test connectivity
 export const testConnection = async () => {
   try {
-    const response = await axios.get('http://localhost:4000/api/v1/auth/login', {
+    const response = await axios.get(`${process.env.REACT_APP_API_URL || "http://localhost:4000"}/api/v1/auth/login`, {
       withCredentials: true
     });
     return { success: true, data: response.data };

@@ -28,7 +28,7 @@ export const setupAutoLogout = () => {
       
       // Synchronous API request to logout
       const xhr = new XMLHttpRequest();
-      xhr.open('GET', 'http://localhost:4000/api/v1/auth/logout', false); // false makes it synchronous
+      xhr.open('GET', `${process.env.REACT_APP_API_URL}/api/v1/auth/logout`, false); // false makes it synchronous
       xhr.withCredentials = true;
       xhr.send();
       

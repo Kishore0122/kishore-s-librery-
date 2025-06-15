@@ -48,7 +48,7 @@ const AdminDashboard = ({ setSelectedComponent }) => {
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const response = await axios.get('http://localhost:4000/api/v1/admin/stats', {
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/v1/admin/stats`, {
           withCredentials: true
         });
         if (response.data.success) {
@@ -62,7 +62,7 @@ const AdminDashboard = ({ setSelectedComponent }) => {
     const fetchPendingRequests = async () => {
       try {
         setLoading(true);
-        const response = await axios.get('http://localhost:4000/api/v1/borrow-requests/requests', {
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/v1/borrow-requests/requests`, {
           withCredentials: true
         });
         if (response.data.success) {

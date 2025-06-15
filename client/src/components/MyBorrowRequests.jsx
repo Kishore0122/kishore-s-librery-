@@ -14,7 +14,7 @@ const MyBorrowRequests = ({ setSelectedComponent }) => {
   const fetchRequests = async () => {
     try {
       setLoading(true);
-      const response = await axios.get("http://localhost:4000/api/v1/borrow-requests/my-requests", {
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/v1/borrow-requests/my-requests`, {
         withCredentials: true
       });
       if (response.data.success) {
