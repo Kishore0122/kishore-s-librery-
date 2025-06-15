@@ -10,6 +10,9 @@ cloudinary.config({
 });
 
 const PORT = process.env.PORT || 4000;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
 
 // Start server
 const startServer = async () => {
