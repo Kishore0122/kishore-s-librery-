@@ -134,8 +134,8 @@ export const logout = catchAsyncErrors(async (req, res, next) => {
   res.status(200).cookie("token", null, {
     expires: new Date(Date.now()),
     httpOnly: true,
-    secure: true,
-    sameSite: "None"
+    secure: process.env.NODE_ENV === "production",
+    sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax"
   });
 
   res.status(200).json({
