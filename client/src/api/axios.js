@@ -35,6 +35,20 @@ api.interceptors.response.use(
   }
 );
 
+// Add a global response interceptor to handle 401 Unauthorized errors
+api.interceptors.response.use(
+  response => response,
+  error => {
+    if (error.response && error.response.status === 401) {
+      // Clear all local storage and force logout
+      localStorage.removeItem('user');
+      localStorage.setItem('logout', Date.now().toString());
+      window.location.href = '/login';
+    }
+    return Promise.reject(error);
+  }
+);
+
 // Add request interceptor for debugging
 api.interceptors.request.use(
   (config) => {

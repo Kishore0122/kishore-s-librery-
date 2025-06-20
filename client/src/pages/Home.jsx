@@ -18,6 +18,7 @@ import UserProfile from "../components/UserProfile";
 import AdminProfile from "../components/AdminProfile";
 import ActionNotification from "../components/ActionNotification";
 import { resetAllPopups } from "../store/slices/popUpSlice";
+import { loadUser } from "./store/slices/authSlice";
 
 const Home = () => {
   const [issidebaropen, setissidebaropen] = useState(false);
@@ -35,16 +36,26 @@ const Home = () => {
     return <Navigate to={"/login"} />;
   }
 
+  // Add session re-validation before switching sidebar components
+  const handleSidebarChange = async (component) => {
+    try {
+      await dispatch(loadUser());
+      setselectedcomponent(component);
+    } catch {
+      // If loadUser fails, user will be redirected by the axios interceptor
+    }
+  };
+
   const renderComponent = () => {
     switch (selectedcomponent) {
       case "Dashboard":
-        return user?.roll === "Admin" ? 
-          <AdminDashboard setSelectedComponent={setselectedcomponent} /> : 
-          <UserDashboard setSelectedComponent={setselectedcomponent} />;
+        return user?.roll === "Admin"
+          ? <AdminDashboard setSelectedComponent={handleSidebarChange} />
+          : <UserDashboard setSelectedComponent={handleSidebarChange} />;
       case "Books":
         return <BookManagement />;
       case "Catalog":
-        return <Catalog setSelectedComponent={setselectedcomponent} />;
+        return <Catalog setSelectedComponent={handleSidebarChange} />;
       case "Users":
         return <Users />;
       case "My Borrowed Books":
@@ -54,15 +65,15 @@ const Home = () => {
       case "Borrow Requests":
         return <BorrowRequests />;
       case "My Borrow Requests":
-        return <MyBorrowRequests setSelectedComponent={setselectedcomponent} />;
+        return <MyBorrowRequests setSelectedComponent={handleSidebarChange} />;
       case "Profile":
-        return user?.roll === "Admin" ? 
-          <AdminProfile /> : 
-          <UserProfile />;
+        return user?.roll === "Admin"
+          ? <AdminProfile />
+          : <UserProfile />;
       default:
-        return user?.roll === "Admin" ? 
-          <AdminDashboard setSelectedComponent={setselectedcomponent} /> : 
-          <UserDashboard setSelectedComponent={setselectedcomponent} />;
+        return user?.roll === "Admin"
+          ? <AdminDashboard setSelectedComponent={handleSidebarChange} />
+          : <UserDashboard setSelectedComponent={handleSidebarChange} />;
     }
   };
 
@@ -77,7 +88,7 @@ const Home = () => {
       <SideBar 
         isSideBarOpen={issidebaropen} 
         setIsSideBarOpen={setissidebaropen} 
-        setSelectedComponent={setselectedcomponent}
+        setSelectedComponent={handleSidebarChange}
       />
       <main className="flex-1 p-6">
         <div className="max-w-7xl mx-auto">
