@@ -1,8 +1,8 @@
-import { app } from "./app.js";
-import {v2 as cloudinary} from "cloudinary";
+import { app, notifyuser, removeunverifiedaccounts } from "./app.js";
+import { v2 as cloudinary } from "cloudinary";
 import connect from "./database/db.js";
 
-// Configure cloudinary
+// Cloudinary config
 cloudinary.config({
     cloud_name: process.env.CLOUDINARY_CLIENT_NAME,
     api_key: process.env.CLOUDINARY_CLIENT_API,
@@ -11,15 +11,14 @@ cloudinary.config({
 
 const PORT = process.env.PORT || 5000;
 
-// Start server
 const startServer = async () => {
     try {
-        // Connect to database first
         await connect();
-        
-        // Then start the server
+        notifyuser();
+        removeunverifiedaccounts();
+
         app.listen(PORT, () => {
-            console.log(`Server is running on port ${PORT}`);
+            console.log(`Server running on port ${PORT}`);
             console.log(`Frontend URL: ${process.env.FRONTEND_URL}`);
         });
     } catch (error) {
@@ -28,13 +27,9 @@ const startServer = async () => {
     }
 };
 
-// Handle unhandled promise rejections
 process.on('unhandledRejection', (err) => {
     console.error('Unhandled Promise Rejection:', err);
-    // Close server & exit process
     process.exit(1);
 });
 
 startServer();
-
-// above lines of code is same for all projects
