@@ -64,7 +64,7 @@ app.get("/api/v1/admin/stats", async (req, res, next) => {
     }
 });
 
-// Error handler
+// Use the global error handler from errorMiddlewares.js
 app.use(errorMiddleware);
 
 // Export services to initialize in main file

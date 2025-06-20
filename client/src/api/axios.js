@@ -20,13 +20,8 @@ api.interceptors.response.use(
       
       // Handle specific status codes - like 401 Unauthorized
       if (error.response.status === 401) {
-        // If the error message is 'Please login to access this resource', force logout
-        if (error.response.data && error.response.data.message === 'Please login to access this resource') {
-          localStorage.removeItem('user');
-          localStorage.setItem('logout', Date.now().toString());
-          window.location.href = '/login';
-        }
-        // Otherwise, let the loadUser function handle the proper auth state
+        // If session expired but user still has local storage data, don't immediately logout
+        // The loadUser function will handle the proper auth state
         console.log("Authentication error - will attempt to refresh session");
       }
     } else if (error.request) {
