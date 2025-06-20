@@ -106,8 +106,8 @@ const BorrowRequests = () => {
                       <div className="flex items-center">
                         <FaBook className="text-indigo-600 mr-2" />
                         <div>
-                          <div className="text-sm font-medium text-gray-900">{request.book.title}</div>
-                          <div className="text-sm text-gray-500">By {request.book.auther}</div>
+                          <div className="text-sm font-medium text-gray-900">{request.book?.title || 'Unknown Book'}</div>
+                          <div className="text-sm text-gray-500">By {request.book?.auther || 'Unknown Author'}</div>
                         </div>
                       </div>
                     </td>
@@ -115,8 +115,8 @@ const BorrowRequests = () => {
                       <div className="flex items-center">
                         <FaUser className="text-gray-500 mr-2" />
                         <div>
-                          <div className="text-sm font-medium text-gray-900">{request.user.name}</div>
-                          <div className="text-sm text-gray-500">{request.user.email}</div>
+                          <div className="text-sm font-medium text-gray-900">{request.user?.name || 'Unknown User'}</div>
+                          <div className="text-sm text-gray-500">{request.user?.email || ''}</div>
                         </div>
                       </div>
                     </td>

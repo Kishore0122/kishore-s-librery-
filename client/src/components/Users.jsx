@@ -158,9 +158,9 @@ const Users = () => {
                     <tr key={user._id}>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="flex items-center">
-                          {user.profile ? (
+                          {user.avatar?.url ? (
                             <img 
-                              src={user.profile.url} 
+                              src={user.avatar.url} 
                               alt={user.name} 
                               className="h-10 w-10 rounded-full mr-3"
                             />

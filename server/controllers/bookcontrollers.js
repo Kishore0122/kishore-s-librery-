@@ -8,8 +8,11 @@ import ErrorHandler from '../middlewares/errorMiddlewares.js';
 export const addbook = catchAsyncErrors(async (req, res, next) => {
   const { title, auther, description, charge, quantity } = req.body;
 
-  if (!title || !auther || !description || !charge || !quantity) {
+  if (!title || !auther || !description || charge == null || quantity == null) {
     return next(new ErrorHandler("Please fill all the fields", 400));
+  }
+  if (isNaN(charge) || isNaN(quantity) || charge < 0 || quantity < 1) {
+    return next(new ErrorHandler("Charge must be >= 0 and quantity must be >= 1", 400));
   }
 
   const book = await Book.create({
