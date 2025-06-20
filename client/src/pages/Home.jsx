@@ -18,7 +18,7 @@ import UserProfile from "../components/UserProfile";
 import AdminProfile from "../components/AdminProfile";
 import ActionNotification from "../components/ActionNotification";
 import { resetAllPopups } from "../store/slices/popUpSlice";
-import { loadUser } from "./store/slices/authSlice";
+import { loadUser } from "../store/slices/authSlice";
 
 const Home = () => {
   const [issidebaropen, setissidebaropen] = useState(false);
