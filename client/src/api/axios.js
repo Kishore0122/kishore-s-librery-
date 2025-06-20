@@ -35,20 +35,6 @@ api.interceptors.response.use(
   }
 );
 
-// Add a global response interceptor to handle 401 Unauthorized errors
-api.interceptors.response.use(
-  response => response,
-  error => {
-    if (error.response && error.response.status === 401) {
-      // Clear all local storage and force logout
-      localStorage.removeItem('user');
-      localStorage.setItem('logout', Date.now().toString());
-      window.location.href = '/login';
-    }
-    return Promise.reject(error);
-  }
-);
-
 // Add request interceptor for debugging
 api.interceptors.request.use(
   (config) => {
@@ -61,6 +47,12 @@ api.interceptors.request.use(
     return Promise.reject(error);
   }
 );
+
+// Debug: Log cookies before every request (for debugging session/cookie issues)
+api.interceptors.request.use((config) => {
+  console.log("[DEBUG] Cookies before request:", document.cookie);
+  return config;
+});
 
 // Export a function to test connectivity
 export const testConnection = async () => {
