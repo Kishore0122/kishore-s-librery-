@@ -8,6 +8,8 @@ export const authenticate = catchAsyncErrors(async (req, res, next) => {
     try {
         // Debug: Log cookies received
         console.log("[AUTH] Cookies received:", req.cookies);
+        // Print all request headers for further debugging
+        console.log("[AUTH] Request headers:", req.headers);
         // Get token from cookies
         const { token } = req.cookies;
         console.log("[AUTH] Token from cookies:", token);
