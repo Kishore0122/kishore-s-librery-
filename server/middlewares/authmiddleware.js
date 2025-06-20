@@ -6,8 +6,11 @@ import ErrorHandler from "./errorMiddlewares.js";
 // Authentication Middleware
 export const authenticate = catchAsyncErrors(async (req, res, next) => {
     try {
+        // Debug: Log cookies received
+        console.log("[AUTH] Cookies received:", req.cookies);
         // Get token from cookies
         const { token } = req.cookies;
+        console.log("[AUTH] Token from cookies:", token);
 
         // If token is not found
         if (!token) {
