@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import api from "../api/axios";
 import { toast } from "react-toastify";
 import { FaBook, FaCalendarAlt, FaHourglassHalf, FaCheck, FaTimes, FaArrowRight } from "react-icons/fa";
 
@@ -14,9 +14,7 @@ const MyBorrowRequests = ({ setSelectedComponent }) => {
   const fetchRequests = async () => {
     try {
       setLoading(true);
-      const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/v1/borrow-requests/my-requests`, {
-        withCredentials: true
-      });
+      const response = await api.get(`/borrow-requests/my-requests`);
       if (response.data.success) {
         setRequests(response.data.requests);
       }
