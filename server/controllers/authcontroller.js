@@ -135,7 +135,8 @@ export const logout = catchAsyncErrors(async (req, res, next) => {
     expires: new Date(Date.now()),
     httpOnly: true,
     secure: false,
-    sameSite: "Lax"
+    sameSite: "Lax",
+    domain: ".kishore-library.netlify.app"
   });
 
   res.status(200).json({
