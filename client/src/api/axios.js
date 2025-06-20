@@ -48,12 +48,6 @@ api.interceptors.request.use(
   }
 );
 
-// Debug: Log cookies before every request (for debugging session/cookie issues)
-api.interceptors.request.use((config) => {
-  console.log("[DEBUG] Cookies before request:", document.cookie);
-  return config;
-});
-
 // Export a function to test connectivity
 export const testConnection = async () => {
   try {
