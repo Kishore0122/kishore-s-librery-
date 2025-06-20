@@ -19,7 +19,7 @@ import { setupAutoLogout, clearAutoLogout } from "./utils/autoLogout.js";
 const App = () => {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(true);
-  const { Loading, authenticated } = useSelector(state => state.auth);
+  const { Loading, authenticated, error } = useSelector(state => state.auth);
 
   // Function to check if we have a stored user
   const checkStoredAuth = () => {
@@ -96,7 +96,15 @@ const App = () => {
   return (
     <Router>
       {isLoading ? (
-        <Loader />
+        error ? (
+          <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+            <div className="text-3xl text-red-600 font-bold mb-4">Error</div>
+            <div className="text-lg text-gray-700 mb-2">{error}</div>
+            <button className="mt-4 px-4 py-2 bg-indigo-600 text-white rounded" onClick={() => window.location.reload()}>Retry</button>
+          </div>
+        ) : (
+          <Loader />
+        )
       ) : (
         <>
           <Routes>
