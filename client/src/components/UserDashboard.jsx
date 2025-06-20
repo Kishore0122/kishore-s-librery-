@@ -3,7 +3,7 @@ import userIcon from "../assets/user.png";
 import bookIcon from "../assets/book-square.png";
 import logo from "../assets/black-logo.png";
 import { useSelector } from "react-redux";
-import axios from "axios";
+import api from "../api/axios";
 import { FaBook, FaExclamationCircle, FaCalendarAlt, FaCheckCircle, FaHourglassHalf } from "react-icons/fa";
 
 const UserDashboard = ({ setSelectedComponent }) => {
@@ -22,9 +22,7 @@ const UserDashboard = ({ setSelectedComponent }) => {
   useEffect(() => {
     const fetchUserStats = async () => {
       try {
-        const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/v1/user/stats`, {
-          withCredentials: true
-        });
+        const response = await api.get(`/user/stats`);
         if (response.data.success) {
           setUserStats(response.data.stats);
         }
@@ -38,9 +36,7 @@ const UserDashboard = ({ setSelectedComponent }) => {
     const fetchPendingRequests = async () => {
       try {
         setRequestsLoading(true);
-        const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/v1/borrow-requests/my-requests`, {
-          withCredentials: true
-        });
+        const response = await api.get(`/borrow-requests/my-requests`);
         if (response.data.success) {
           // Filter only pending requests
           const pending = response.data.requests.filter(req => req.status === 'pending');

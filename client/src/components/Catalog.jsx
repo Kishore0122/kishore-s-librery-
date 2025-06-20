@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import api from "../api/axios";
 import { toast } from "react-toastify";
 import { FaSearch, FaBook } from "react-icons/fa";
 import { useSelector } from "react-redux";
@@ -19,9 +19,7 @@ const Catalog = () => {
   const fetchBooks = async () => {
     try {
       setLoading(true);
-      const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/v1/books/all`, {
-        withCredentials: true
-      });
+      const response = await api.get(`/books/all`);
       if (response.data.success) {
         setBooks(response.data.books);
       }
@@ -35,12 +33,9 @@ const Catalog = () => {
 
   const handleBorrow = async (bookId) => {
     try {
-      const response = await axios.post(
-        `${process.env.REACT_APP_API_URL}/api/v1/borrow-requests/request/${bookId}`,
-        { email: user.email },
-        {
-          withCredentials: true
-        }
+      const response = await api.post(
+        `/borrow-requests/request/${bookId}`,
+        { email: user.email }
       );
       if (response.data.success) {
         toast.success("Borrow request submitted successfully");

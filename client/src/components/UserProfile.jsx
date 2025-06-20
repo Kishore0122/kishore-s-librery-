@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import axios from 'axios';
+import api from "../api/axios";
 import { toast } from 'react-toastify';
 import userIcon from "../assets/user.png";
 import { FaUser, FaIdCard, FaBook, FaExclamationCircle, FaEdit, FaCamera } from 'react-icons/fa';
@@ -28,9 +28,7 @@ const UserProfile = () => {
   useEffect(() => {
     const fetchUserStats = async () => {
       try {
-        const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/v1/user/stats`, {
-          withCredentials: true
-        });
+        const response = await api.get(`/user/stats`);
         if (response.data.success) {
           setUserStats(response.data.stats);
         }
@@ -91,8 +89,8 @@ const UserProfile = () => {
         formDataToSend.append('profile', formData.profilePic);
       }
       
-      const response = await axios.put(
-        `${process.env.REACT_APP_API_URL}/api/v1/user/profile/update`,
+      const response = await api.put(
+        `/user/profile/update`,
         formDataToSend,
         {
           withCredentials: true,

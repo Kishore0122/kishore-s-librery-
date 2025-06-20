@@ -16,7 +16,7 @@ import {
   ArcElement,
 } from "chart.js";
 import logo from "../assets/black-logo.png";
-import axios from "axios";
+import api from "../api/axios";
 import { useSelector } from "react-redux";
 import { FaBell, FaBook, FaClipboardList } from "react-icons/fa";
 
@@ -48,9 +48,7 @@ const AdminDashboard = ({ setSelectedComponent }) => {
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/v1/admin/stats`, {
-          withCredentials: true
-        });
+        const response = await api.get(`/admin/stats`);
         if (response.data.success) {
           setStats(response.data.stats);
         }
@@ -62,9 +60,7 @@ const AdminDashboard = ({ setSelectedComponent }) => {
     const fetchPendingRequests = async () => {
       try {
         setLoading(true);
-        const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/v1/borrow-requests/requests`, {
-          withCredentials: true
-        });
+        const response = await api.get(`/borrow-requests/requests`);
         if (response.data.success) {
           const pending = response.data.requests.filter(req => req.status === 'pending');
           setPendingRequests(pending);

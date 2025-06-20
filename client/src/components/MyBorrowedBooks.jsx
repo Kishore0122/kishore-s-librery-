@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import api from "../api/axios";
 import { toast } from "react-toastify";
 import { FaBook, FaCalendarAlt, FaUndo, FaMoneyBillWave, FaCheckCircle } from "react-icons/fa";
 import { useSelector } from "react-redux";
@@ -16,9 +16,7 @@ const MyBorrowedBooks = () => {
   const fetchBorrowedBooks = async () => {
     try {
       setLoading(true);
-      const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/v1/user/borrowed-books`, {
-        withCredentials: true
-      });
+      const response = await api.get(`/user/borrowed-books`);
       console.log("Borrowed books response:", response.data);
       if (response.data.success) {
         // Process books to ensure they have all needed properties
@@ -41,10 +39,9 @@ const MyBorrowedBooks = () => {
 
   const handleReturnBook = async (borrowId) => {
     try {
-      const response = await axios.put(
-        `${process.env.REACT_APP_API_URL}/api/v1/borrow/returnborrowedbook/${borrowId}`,
-        { email: user.email },
-        { withCredentials: true }
+      const response = await api.put(
+        `/borrow/returnborrowedbook/${borrowId}`,
+        { email: user.email }
       );
       if (response.data.success) {
         toast.success(response.data.message || "Book returned successfully");
@@ -65,13 +62,7 @@ const MyBorrowedBooks = () => {
         );
         
         // Also update user stats to reflect the change
-        try {
-          await axios.get(`${process.env.REACT_APP_API_URL}/api/v1/user/stats`, {
-            withCredentials: true
-          });
-        } catch (error) {
-          console.error("Error updating user stats:", error);
-        }
+        await api.get(`/user/stats`);
       }
     } catch (error) {
       console.error("Error returning book:", error);
