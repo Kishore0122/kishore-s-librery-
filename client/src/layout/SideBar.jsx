@@ -29,15 +29,7 @@ const SideBar = ({ isSideBarOpen, setIsSideBarOpen, setSelectedComponent }) => {
   const handleLogout = () => {
     // Show a loading toast
     toast.info("Logging out...");
-    
-    
-    // Manually clear any local data as fallback
-    setTimeout(() => {
-      if (localStorage.getItem('user')) {
-        localStorage.removeItem('user');
-        window.location.href = '/login';
-      }
-    }, 2000);
+    dispatch(logout()); // Use the Redux logout action for full logout
   };
 
   // Check authentication status
