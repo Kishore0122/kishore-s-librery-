@@ -111,6 +111,7 @@ const App = () => {
             {/* Use the combined authentication state */}
             <Route path="/" element={isAuthenticated ? <Home /> : <Navigate to="/login" replace />} />
             <Route path="/login" element={isAuthenticated ? <Navigate to="/" replace /> : <Login />} />
+            <Route path="/logout" element={isAuthenticated ? <Navigate to="/" replace /> : <Login />} />
             <Route path="/register" element={isAuthenticated ? <Navigate to="/" replace /> : <Register />} />
             <Route path="/password/forgot" element={<ForgotPassword />} />
             <Route path="/otp-verification/:email" element={<OTP />} />
